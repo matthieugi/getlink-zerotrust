@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Stack } from "@fluentui/react";
-import AddTodo from './components/AddTodo';
-import TodoList from './components/TodoList';
-import './App.css';
+import AddTodo from "./components/AddTodo";
+import TodoList from "./components/TodoList";
+import { PageLayout } from "./components/PageLayout";
+import {
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+} from "@azure/msal-react";
+
+import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState([{ id: 1, name: "Todo Item 1" }, { id: 2, name: "Todo Item 2" }]);
+  const [todos, setTodos] = useState([
+    { id: 1, name: "Todo Item 1" },
+    { id: 2, name: "Todo Item 2" },
+  ]);
 
   const addTodo = (todoName) => {
     if (todoName !== "") {
@@ -16,20 +25,29 @@ function App() {
   };
 
   const deleteTodo = (id) => {
-    const newTasks = todos.filter((todo) => { return todo.id !== id });
+    const newTasks = todos.filter((todo) => {
+      return todo.id !== id;
+    });
     setTodos(newTasks);
   };
 
   return (
-    <div className="wrapper">
-      <Stack horizontalAlign="center">
-        <h1>Todo App using Fluent UI &amp; React</h1>
-        <Stack style={{ width: 300 }} gap={25}>
-          <AddTodo addTodo={addTodo} />
-          <TodoList todos={todos} deleteTodo={deleteTodo} />
-        </Stack>
-      </Stack>
-    </div>
+    <PageLayout>
+      <div className="wrapper">
+        <AuthenticatedTemplate>
+          <Stack horizontalAlign="center">
+            <h1>Todo App using Fluent UI &amp; React</h1>
+            <Stack style={{ width: 300 }} gap={25}>
+              <AddTodo addTodo={addTodo} />
+              <TodoList todos={todos} deleteTodo={deleteTodo} />
+            </Stack>
+          </Stack>
+        </AuthenticatedTemplate>
+        <UnauthenticatedTemplate>
+          You need to be authenticated to acces your todo list.
+        </UnauthenticatedTemplate>
+      </div>
+    </PageLayout>
   );
 }
 

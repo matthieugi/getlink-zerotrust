@@ -4,13 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {  initializeIcons, ThemeProvider } from "@fluentui/react";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { MsalProvider } from "@azure/msal-react";
+import { msalConfig } from "./components/authConfig"
 
 initializeIcons();
+const msalInstance = new PublicClientApplication(msalConfig);
+
+console.log(msalConfig)
 
 ReactDOM.render(
   <React.StrictMode>
+    <MsalProvider instance={msalInstance}>
     <ThemeProvider><App /></ThemeProvider>
-    
+    </MsalProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

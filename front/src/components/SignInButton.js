@@ -1,10 +1,10 @@
 import React from "react";
 import { useMsal } from "@azure/msal-react";
-//import { loginRequest } from "./authConfig";
+import { loginRequest } from "./authConfig";
 import {  PrimaryButton } from "@fluentui/react";
 
 function handleLogin(instance) {
-    instance.loginPopup(/*loginRequest*/).catch(e => {
+    instance.loginPopup(loginRequest).catch(e => {
         console.error(e);
     });
 }
